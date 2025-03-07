@@ -7,6 +7,6 @@ const basicGet = (req, res, next) => {
 
 app.get("/", basicGet);
 
-app.listen(42069, () => {
-    console.log("Server running on port 42069")
+app.listen(process.env.PORT, () => {
+    console.log(`Server running on port ${process.env.PORT}`)
 });

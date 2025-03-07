@@ -1,6 +1,7 @@
 {
   "name": "ff5-job-randomizer",
   "version": "0.1.0",
+  "type": "module",
   "description": "FF5 job randomization API",
   "main": "index.js",
   "scripts": {
