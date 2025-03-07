@@ -1,0 +1,22 @@
+{
+  "name": "ff5-job-randomizer",
+  "version": "0.1.0",
+  "description": "FF5 job randomization API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnachor/ff5-job-randomizer.git"
+  },
+  "author": "John Achor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnachor/ff5-job-randomizer/issues"
+  },
+  "homepage": "https://github.com/johnachor/ff5-job-randomizer#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
