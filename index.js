@@ -1,8 +1,12 @@
 import express from "express";
+import { characters, jobSets } from "./constants.js";
+import { getRandomElementFromArray } from "./utils.js";
 const app = express();
 
 const basicGet = (req, res, next) => {
-    res.send("It works bitch");
+    const chosenCharacter = getRandomElementFromArray(characters);
+    const chosenJob = getRandomElementFromArray(jobSets.flat());
+    res.send(`Randomization time! Change ${chosenCharacter} to a ${chosenJob}!`);
 };
 
 app.get("/", basicGet);
