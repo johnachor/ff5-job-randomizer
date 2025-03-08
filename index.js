@@ -12,6 +12,11 @@ const basicGet = (req, res, next) => {
     res.send(`Randomization time! Change ${chosenCharacter} to a ${chosenJob}!`);
 };
 
+const starterJobs = (req, res, next) => {
+    const jobs = characters.map(char => `${char}: ${getRandomElementFromArray(jobSets[1])}`);
+    res.send(`Nice, a new game! Here's your 4 starting jobs: ${jobs.join(" ")}`);
+};
+
 const toggleFreelancer = (req, res, next) => {
     freelancerAllowed = !freelancerAllowed;
     res.send(`Freelancer allowed: ${freelancerAllowed}`);
@@ -43,6 +48,7 @@ app.get("/reset", resetProgression);
 app.get("/unlock", progressGame);
 app.get("/available", getAvailableJob);
 app.get("/freelancer", toggleFreelancer);
+app.get("/newgame", starterJobs);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`)
