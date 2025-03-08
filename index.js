@@ -4,6 +4,7 @@ import { getRandomElementFromArray } from "./utils.js";
 const app = express();
 
 let unlockState = 0;
+let freelancerAllowed = false;
 
 const basicGet = (req, res, next) => {
     const chosenCharacter = getRandomElementFromArray(characters);
@@ -11,9 +12,15 @@ const basicGet = (req, res, next) => {
     res.send(`Randomization time! Change ${chosenCharacter} to a ${chosenJob}!`);
 };
 
+const toggleFreelancer = (req, res, next) => {
+    freelancerAllowed = !freelancerAllowed;
+    res.send(`Freelancer allowed: ${freelancerAllowed}`);
+}
+
 const getAvailableJob = (req, res, next) => {
+    const availableJobs = jobSets.slice(freelancerAllowed ? 0 : 1,unlockState + 1).flat();
     const chosenCharacter = getRandomElementFromArray(characters);
-    const chosenJob = getRandomElementFromArray(jobSets.slice(0,unlockState + 1).flat());
+    const chosenJob = getRandomElementFromArray(availableJobs);
     res.send(`Randomization time! Change ${chosenCharacter} to a ${chosenJob}!`);
 };
 
