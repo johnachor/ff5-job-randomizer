@@ -10,4 +10,4 @@ export const jobSets = [startingJob,windCrystalJobs,waterCrystalJobs,fireCrystal
 
 export const characters = ["Bartz","Lenna","Faris","Galuf/Krile"];
 
-export const progressGates = ["Fresh Start", "Wind Crystal", "Water Crystal", "Fire Crystal", "Chocobo Crystals","Earth Crystal","Mime Unlocked"];
+export const progressGates = ["Fresh Start", "Wind Crystal", "Water Crystal", "Fire Crystal", "Chocobo Jobs","Earth Crystal","Mime Unlocked"];
