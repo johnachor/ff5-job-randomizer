@@ -12,7 +12,7 @@ const basicGet = (req, res, next) => {
 };
 
 const getAvailableJob = (req, res, next) => {
-    res.send(`Available jobs: ${jobSets.slice(0,unlockState).flat()}`)
+    res.send(`Available jobs: ${jobSets.slice(0,unlockState + 1).flat()}`)
 };
 
 const resetProgression = (req, res, next) => {
