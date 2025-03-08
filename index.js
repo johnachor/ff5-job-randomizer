@@ -16,7 +16,7 @@ const starterJobs = (req, res, next) => {
 
 const toggleFreelancer = (req, res, next) => {
     freelancerAllowed = !freelancerAllowed;
-    res.send(`Freelancer allowed: ${freelancerAllowed}`);
+    res.send(`Freelancer has been ${freelancerAllowed ? "enabled" : "disabled"}.`);
 };
 
 const randomizeSomeone = (req, res, next) => {
@@ -31,7 +31,7 @@ const resetProgression = (req, res, next) => {
 };
 
 const statusReport = (req, res, next) => {
-    res.send(`Currently at gate ${unlockState} (${progressGates[unlockState]}). There are ${getAvailableJobs().length} jobs available.`);
+    res.send(`Currently at gate ${unlockState} (${progressGates[unlockState]}). There are ${getAvailableJobs().length} jobs available. Freelancer is ${freelancerAllowed ? "enabled" : "disabled"}.`);
 };
 
 const progressGame = (req, res, next) => {
@@ -45,11 +45,11 @@ const progressGame = (req, res, next) => {
 
 app.get("/", statusReport);
 app.get("/reset", resetProgression);
-app.get("/unlock", progressGame);
-app.get("/available", randomizeSomeone);
+app.get("/progress", progressGame);
+app.get("/randomize", randomizeSomeone);
 app.get("/freelancer", toggleFreelancer);
 app.get("/newgame", starterJobs);
 
 app.listen(process.env.PORT, () => {
-    console.log(`Server running on port ${process.env.PORT}`)
+    console.log(`Server running on port ${process.env.PORT}`);
 });
