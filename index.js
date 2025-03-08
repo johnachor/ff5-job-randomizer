@@ -13,6 +13,7 @@ const basicGet = (req, res, next) => {
 };
 
 const starterJobs = (req, res, next) => {
+    unlockState = 1;
     const jobs = characters.map(char => `${char}: ${getRandomElementFromArray(jobSets[1])}`);
     res.send(`Nice, a new game! Here's your 4 starting jobs: ${jobs.join(" ")}`);
 };
