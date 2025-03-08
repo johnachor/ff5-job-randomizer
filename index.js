@@ -12,7 +12,9 @@ const basicGet = (req, res, next) => {
 };
 
 const getAvailableJob = (req, res, next) => {
-    res.send(`Available jobs: ${jobSets.slice(0,unlockState + 1).flat()}`)
+    const chosenCharacter = getRandomElementFromArray(characters);
+    const chosenJob = getRandomElementFromArray(jobSets.slice(0,unlockState + 1).flat());
+    res.send(`Randomization time! Change ${chosenCharacter} to a ${chosenJob}!`);
 };
 
 const resetProgression = (req, res, next) => {
@@ -25,7 +27,7 @@ const progressGame = (req, res, next) => {
         res.send("Progression is already maxed. Use !resetjobs to start over.");
     } else {
         unlockState = unlockState + 1;
-        res.send(`Progress logged! You've unlocked ${jobSets[unlockState]} new jobs!`);
+        res.send(`Progress logged! You've unlocked ${jobSets[unlockState].length} new jobs: ${jobSets[unlockState].join(", ")}`);
     }
 };
 
