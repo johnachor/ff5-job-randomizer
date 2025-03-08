@@ -9,3 +9,5 @@ secretJob = ["Mime"];
 export const jobSets = [startingJob,windCrystalJobs,waterCrystalJobs,fireCrystalJobs,chocoboJobs,earthCrystalJobs,secretJob];
 
 export const characters = ["Bartz","Lenna","Faris","Galuf/Krile"];
+
+export const progressGates = ["Fresh Start", "Wind Crystal", "Water Crystal", "Fire Crystal", "Chocobo Crystals","Earth Crystal","Mime Unlocked"];
