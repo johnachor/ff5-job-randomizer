@@ -50,7 +50,7 @@ const toggleFreelancer = (req, res, next) => {
 
 const randomizeSomeone = (req, res, next) => {
     const chosenCharacter = getRandomElementFromArray(gameState.galufKrileSwapped ? charactersPostSwap : characters);
-    const chosenJob = getRandomElementFromArray(getAvailableJobs());
+    const chosenJob = getRandomElementFromArray(getAvailableJobs().filter(job => job !== gameState.currentJobs.find(charJob => charJob.char === chosenCharacter)?.job));
     setCharacterJob(chosenCharacter, chosenJob);
     res.send(`Randomization time! Change ${chosenCharacter} to ${chosenJob}!`);
 };
