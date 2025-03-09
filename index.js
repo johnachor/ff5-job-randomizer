@@ -34,10 +34,10 @@ const getAvailableJobs = () => jobSets.slice(gameState.freelancerAllowed ? 0 : 1
 
 const starterJobs = (req, res, next) => {
     gameState.gateProgress = 1;
-    gameState.currentJobs = gameState.currentJobs.concat(characters.map(char => ({
+    gameState.currentJobs = characters.map(char => ({
         character: char,
         job: getRandomElementFromArray(getAvailableJobs())
-    })));
+    }));
 
     const jobStrings = gameState.currentJobs.map(charJob => `${charJob.character} is a ${charJob.job}.`)
     res.send(`New game, let's go! Here's your 4 starting jobs: ${jobStrings.join(" ")}`);
@@ -79,7 +79,7 @@ const setCharJobExplicit = (req, res, next) => {
     const requestedJob = decodeURI(req.query.job);
     const currentChars = gameState.galufKrileSwapped ? charactersPostSwap : characters;
     const caseCorrectedChar = currentChars.find(character => character.toLowerCase() === requestedChar.toLowerCase());
-    const caseCorrectedJob = getAvailableJobs().find(availableJob => availableJob.toLowerCase() === requestedJob.toLowerCase());
+    const caseCorrectedJob = getAvailableJobs().find(availableJob => availableJob.split(" ")[0].toLowerCase() === requestedJob.toLowerCase());
     if (!caseCorrectedChar) {
         res.send(`Character name is not one of the current four: ${currentChars.join(" ")}`);
         return;
