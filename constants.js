@@ -1,14 +1,37 @@
-export const startingJob = ["Freelancer"],
-windCrystalJobs = ["Knight","Monk","Thief","White Mage","Black Mage","Blue Mage"],
-waterCrystalJobs = ["Berserker","Mystic Knight","Time Mage","Summoner","Red Mage"],
-fireCrystalJobs = ["Ninja","Geomancer","Beastmaster"],
-chocoboJobs = ["Ranger","Bard"],
-earthCrystalJobs = ["Chemist","Samurai","Dancer","Dragoon"],
-secretJob = ["Mime"];
+export const BARTZ = "Bartz",
+LENNA = "Lenna",
+FARIS = "Faris",
+GALUF = "Galuf",
+KRILE = "Krile";
 
-export const jobSets = [startingJob,windCrystalJobs,waterCrystalJobs,fireCrystalJobs,chocoboJobs,earthCrystalJobs,secretJob];
+export const FREELANCER = "Freelancer", KNIGHT = "Knight", 
+MONK = "Monk", THIEF = "Thief", WHITE_MAGE = "White Mage", 
+BLACK_MAGE = "Black Mage", BLUE_MAGE = "Blue Mage", BERSERKER = "Berserker",
+MYSTIC_KNIGHT = "Mystic Knight", TIME_MAGE = "Time Mage",
+SUMMONER = "Summoner", RED_MAGE = "Red Mage", NINJA = "Ninja",
+GEOMANCER = "Geomancer", BEASTMASTER = "Beastmaster", RANGER = "Ranger",
+BARD = "Bard", CHEMIST = "Chemist", SAMURAI = "Samurai", DANCER = "Dancer", 
+DRAGOON = "Dragoon", MIME = "Mime";
 
-export const characters = ["Bartz","Lenna","Faris","Galuf"];
-export const charactersPostSwap = ["Bartz","Lenna","Faris","Krile"]
+export const FRESH_START = "Fresh Start",
+WIND_CRYSTAL = "Wind Crystal",
+WATER_CRYSTAL = "Water Crystal",
+FIRE_CRYSTAL = "Fire Crystal",
+CHOCOBO = "Chocobo Jobs",
+EARTH_CRYSTAL = "Earth Crystal",
+MIME_UNLOCKED = "Mime Unlocked";
 
-export const progressGates = ["Fresh Start", "Wind Crystal", "Water Crystal", "Fire Crystal", "Chocobo Jobs","Earth Crystal","Mime Unlocked"];
+export const STARTING_JOB = [FREELANCER],
+WIND_CRYSTAL_JOBS = [KNIGHT,MONK,THIEF,WHITE_MAGE,BLACK_MAGE,BLUE_MAGE],
+WATER_CRYSTAL_JOBS = [BERSERKER,MYSTIC_KNIGHT,TIME_MAGE,SUMMONER,RED_MAGE],
+FIRE_CRYSTAL_JOBS = [NINJA,GEOMANCER,BEASTMASTER],
+CHOCOBO_JOBS = [RANGER,BARD],
+EARTH_CRYSTAL_JOBS = [CHEMIST,SAMURAI,DANCER,DRAGOON],
+SECRET_JOB = [MIME];
+
+export const jobSets = [STARTING_JOB,WIND_CRYSTAL_JOBS,WATER_CRYSTAL_JOBS,FIRE_CRYSTAL_JOBS,CHOCOBO_JOBS,EARTH_CRYSTAL_JOBS,SECRET_JOB];
+
+export const STARTING_CHARACTERS = [BARTZ,LENNA,GALUF,FARIS];
+export const POST_SWAP_CHARACTERS = [BARTZ,LENNA,KRILE,FARIS]
+
+export const PROGRESS_GATES = [FRESH_START,WIND_CRYSTAL,WATER_CRYSTAL,FIRE_CRYSTAL,CHOCOBO,EARTH_CRYSTAL,MIME_UNLOCKED];
