@@ -64,7 +64,7 @@ const progressGame = (req, res, next) => {
         res.send("Progression is already maxed. Use !resetprogress or !newgame to start over.");
     } else {
         gameState.gateProgress += 1;
-        res.send(`Progress logged! You're now at gate ${gameState.gateProgress} (${progressGates[unlockState]}). Unlocked ${jobSets[gameState.gateProgress].length} new jobs: ${jobSets[gameState.gateProgress].join(", ")}`);
+        res.send(`Progress logged! You're now at gate ${gameState.gateProgress} (${progressGates[gameState.gateProgress]}). Unlocked ${jobSets[gameState.gateProgress].length} new jobs: ${jobSets[gameState.gateProgress].join(", ")}`);
     }
 };
 
