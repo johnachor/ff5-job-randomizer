@@ -19,14 +19,14 @@ const gameState = {
 const setCharacterJob = (character, job) => {
     gameState.currentJobs = gameState.currentJobs
     .filter((charJob) => charJob.char !== character)
-    .concat({char: character, job: job});
+    .concat({character, job});
 };
 
 const swapGalufForKrile = (req, res, next) => {
     const galufJob = gameState.currentJobs.find(charJob => charJob.character === "Galuf").job;
     gameState.currentJobs = gameState.currentJobs
-    .filter((charJob) => charJob.char !== "Galuf")
-    .concat({char: "Krile", job: galufJob});
+    .filter((charJob) => charJob.character !== "Galuf")
+    .concat({character: "Krile", job: galufJob});
     res.send("RIP Galuf.");
 };
 
