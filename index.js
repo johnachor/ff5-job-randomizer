@@ -56,7 +56,7 @@ const resetProgression = (req, res, next) => {
 };
 
 const statusReport = (req, res, next) => {
-    res.send(`Currently at gate ${gameState.gateProgress} (${progressGates[gameState.gateProgress]}). There are ${getAvailableJobs().length} jobs available. Freelancer is ${gameState.freelancerAllowed ? "enabled" : "disabled"}.`);
+    res.send(`Currently at gate ${gameState.gateProgress} (${progressGates[gameState.gateProgress]}). There are ${getAvailableJobs().length} jobs available. Freelancer is ${gameState.freelancerAllowed ? "enabled" : "disabled"}. Current jobs: ${gameState.currentJobs.map(charJob => `${charJob.character}: ${charJob.job}`).join(" | ")}`);
 };
 
 const progressGame = (req, res, next) => {
