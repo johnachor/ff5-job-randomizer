@@ -8,6 +8,7 @@ secretJob = ["Mime"];
 
 export const jobSets = [startingJob,windCrystalJobs,waterCrystalJobs,fireCrystalJobs,chocoboJobs,earthCrystalJobs,secretJob];
 
-export const characters = ["Bartz","Lenna","Faris","Galuf/Krile"];
+export const characters = ["Bartz","Lenna","Faris","Galuf"];
+export const charactersPostSwap = ["Bartz","Lenna","Faris","Krile"]
 
 export const progressGates = ["Fresh Start", "Wind Crystal", "Water Crystal", "Fire Crystal", "Chocobo Jobs","Earth Crystal","Mime Unlocked"];

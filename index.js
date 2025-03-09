@@ -1,46 +1,90 @@
 import express from "express";
-import { characters, jobSets, progressGates } from "./constants.js";
+import { characters, charactersPostSwap, jobSets, progressGates } from "./constants.js";
 import { getRandomElementFromArray } from "./utils.js";
+
 const app = express();
 
-let unlockState = 1;
-let freelancerAllowed = false;
+const gameState = {
+    gateProgress: 1,
+    freelancerAllowed: false,
+    galufKrileSwapped: false,
+    currentJobs: []
+};
 
-const getAvailableJobs = () => jobSets.slice(freelancerAllowed ? 0 : 1,unlockState + 1).flat();
+const setCharacterJob = (character, job) => {
+    gameState.currentJobs = gameState.currentJobs
+    .filter((charJob) => charJob.char !== character)
+    .concat({char: character, job: job});
+};
+
+const swapGalufForKrile = (req, res, next) => {
+    const galufJob = gameState.currentJobs.find(charJob => charJob.character === "Galuf").job;
+    gameState.currentJobs = gameState.currentJobs
+    .filter((charJob) => charJob.char !== "Galuf")
+    .concat({char: "Krile", job: galufJob});
+    res.send("RIP Galuf.");
+};
+
+const getAvailableJobs = () => jobSets.slice(gameState.freelancerAllowed ? 0 : 1, gameState.gateProgress + 1).flat();
 
 const starterJobs = (req, res, next) => {
-    unlockState = 1;
-    const jobs = characters.map(char => `${char}: ${getRandomElementFromArray(jobSets[1])}`);
-    res.send(`New game, let's go! Here's your 4 starting jobs: ${jobs.join(" | ")}`);
+    gameState.gateProgress = 1;
+    gameState.currentJobs = gameState.currentJobs.concat(characters.map(char => ({
+        character: char,
+        job: getRandomElementFromArray(getAvailableJobs())
+    })));
+
+    const jobStrings = gameState.currentJobs.map(charJob => `${charJob.character} is a ${charJob.job}.`)
+    res.send(`New game, let's go! Here's your 4 starting jobs: ${jobStrings.join(" ")}`);
 };
 
 const toggleFreelancer = (req, res, next) => {
-    freelancerAllowed = !freelancerAllowed;
-    res.send(`Freelancer has been ${freelancerAllowed ? "enabled" : "disabled"}.`);
+    gameState.freelancerAllowed = !gameState.freelancerAllowed;
+    res.send(`Freelancer has been ${gameState.freelancerAllowed ? "enabled" : "disabled"}.`);
 };
 
 const randomizeSomeone = (req, res, next) => {
-    const chosenCharacter = getRandomElementFromArray(characters);
+    const chosenCharacter = getRandomElementFromArray(gameState.galufKrileSwapped ? charactersPostSwap : characters);
     const chosenJob = getRandomElementFromArray(getAvailableJobs());
+    setCharacterJob(chosenCharacter, chosenJob);
     res.send(`Randomization time! Change ${chosenCharacter} to ${chosenJob}!`);
 };
 
 const resetProgression = (req, res, next) => {
-    unlockState = 1;
+    gameState.gateProgress = 1;
     res.send("Game progression has been reset to gate 1 (Wind Crystal).");
 };
 
 const statusReport = (req, res, next) => {
-    res.send(`Currently at gate ${unlockState} (${progressGates[unlockState]}). There are ${getAvailableJobs().length} jobs available. Freelancer is ${freelancerAllowed ? "enabled" : "disabled"}.`);
+    res.send(`Currently at gate ${gameState.gateProgress} (${progressGates[gameState.gateProgress]}). There are ${getAvailableJobs().length} jobs available. Freelancer is ${gameState.freelancerAllowed ? "enabled" : "disabled"}.`);
 };
 
 const progressGame = (req, res, next) => {
-    if (unlockState >= 6) {
+    if (gameState.gateProgress >= 6) {
         res.send("Progression is already maxed. Use !resetprogress or !newgame to start over.");
     } else {
-        unlockState = unlockState + 1;
-        res.send(`Progress logged! You're now at gate ${unlockState} (${progressGates[unlockState]}). Unlocked ${jobSets[unlockState].length} new jobs: ${jobSets[unlockState].join(", ")}`);
+        gameState.gateProgress += 1;
+        res.send(`Progress logged! You're now at gate ${gameState.gateProgress} (${progressGates[unlockState]}). Unlocked ${jobSets[gameState.gateProgress].length} new jobs: ${jobSets[unlockState].join(", ")}`);
     }
+};
+
+const setCharJobExplicit = (req, res, next) => {
+    const requestedChar = decodeURI(req.query.char);
+    const requestedJob = decodeURI(req.query.job);
+    const currentChars = gameState.galufKrileSwapped ? charactersPostSwap : characters;
+    const caseCorrectedChar = currentChars.find(character.toLowerCase() === requestedChar.toLowerCase();
+    const caseCorrectedJob = getAvailableJobs().find(availableJob => availableJob.toLowerCase() === requestedJob);
+    if (!caseCorrectedChar) {
+        res.send(`Character name is not one of the current four: ${currentChars.join(" ")}`);
+        return;
+    }
+    if (!caseCorrectedJob) {
+        res.send(`Requested job not in currently available jobs: ${getAvailableJobs().join(", ")}`);
+        return;
+    }
+    setCharacterJob(caseCorrectedChar, caseCorrectedJob);
+    res.send(`${caseCorrectedChar} has been set to ${caseCorrectedJob}`);
+
 };
 
 app.get("/", statusReport);
@@ -49,6 +93,8 @@ app.get("/progress", progressGame);
 app.get("/randomize", randomizeSomeone);
 app.get("/freelancer", toggleFreelancer);
 app.get("/newgame", starterJobs);
+app.get("/krileswap", swapGalufForKrile);
+app.get("/explicit", setCharJobExplicit);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`);
