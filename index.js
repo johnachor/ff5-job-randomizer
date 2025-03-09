@@ -1,6 +1,6 @@
 import express from "express";
 import { characters, charactersPostSwap, jobSets, progressGates } from "./constants.js";
-import { getRandomElementFromArray, stringsMatch } from "./utils.js";
+import { getRandomElementFromArray, stringsMatchCaseInsensitive } from "./utils.js";
 
 const app = express();
 
@@ -16,6 +16,9 @@ const gameState = {
     ]
 };
 
+const findCharJobByChar = (char) => gameState.currentJobs.find(charJob => stringsMatchCaseInsensitive(charJob.character, char));
+const findCharJobByJob = (job) => gameState.currentJobs.find(charJob => stringsMatchCaseInsensitive(charJob.job, job));
+
 const setCharacterJob = (character, job) => {
     gameState.currentJobs = gameState.currentJobs
     .filter((charJob) => charJob.character !== character)
@@ -23,7 +26,7 @@ const setCharacterJob = (character, job) => {
 };
 
 const swapGalufForKrile = (req, res, next) => {
-    const galufJob = gameState.currentJobs.find(charJob => charJob.character === "Galuf").job;
+    const galufJob = findCharJobByChar("Galuf")?.job;
     gameState.currentJobs = gameState.currentJobs
     .filter((charJob) => charJob.character !== "Galuf")
     .concat({character: "Krile", job: galufJob});
@@ -38,7 +41,6 @@ const starterJobs = (req, res, next) => {
         character: char,
         job: getRandomElementFromArray(getAvailableJobs())
     }));
-
     const jobStrings = gameState.currentJobs.map(charJob => `${charJob.character} is a ${charJob.job}.`)
     res.send(`New game, let's go! Here's your 4 starting jobs: ${jobStrings.join(" ")}`);
 };
@@ -50,7 +52,7 @@ const toggleFreelancer = (req, res, next) => {
 
 const randomizeSomeone = (req, res, next) => {
     const chosenCharacter = getRandomElementFromArray(gameState.galufKrileSwapped ? charactersPostSwap : characters);
-    const chosenJob = getRandomElementFromArray(getAvailableJobs().filter(job => !stringsMatch(job, gameState.currentJobs.find(charJob => charJob.character === chosenCharacter)?.job)));
+    const chosenJob = getRandomElementFromArray(getAvailableJobs().filter(job => !stringsMatchCaseInsensitive(job, gameState.currentJobs.find(charJob => charJob.character === chosenCharacter)?.job)));
     setCharacterJob(chosenCharacter, chosenJob);
     res.send(`Randomization time! Change ${chosenCharacter} to ${chosenJob}!`);
 };
