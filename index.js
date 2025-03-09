@@ -51,10 +51,13 @@ const toggleFreelancer = (req, res, next) => {
 };
 
 const randomizeSomeone = (req, res, next) => {
-    const chosenCharacter = getRandomElementFromArray(gameState.galufKrileSwapped ? POST_SWAP_CHARACTERS : STARTING_CHARACTERS);
-    const chosenJob = getRandomElementFromArray(getAvailableJobs().filter(job => !stringsMatchCaseInsensitive(job, findCharJobByChar(chosenCharacter)?.job)));
-    setCharacterJob(chosenCharacter, chosenJob);
-    res.send(`Randomization time! Change ${chosenCharacter} to ${chosenJob}!`);
+    const {character, job} = getRandomElementFromArray(gameState.currentJobs);
+    console.log(job);
+    const availableJobsFiltered = getAvailableJobs().filter(availJob => !stringsMatchCaseInsensitive(availJob, job));
+    console.log(availableJobsFiltered);
+    const chosenJob = getRandomElementFromArray(availableJobsFiltered);
+    setCharacterJob(character, chosenJob);
+    res.send(`Randomization time! Change ${character} to ${chosenJob}!`);
 };
 
 const resetProgression = (req, res, next) => {
