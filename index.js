@@ -69,6 +69,7 @@ const progressGame = (req, res, next) => {
 };
 
 const setCharJobExplicit = (req, res, next) => {
+    console.log({char: req.query.char, job: req.query.job});
     const requestedChar = decodeURI(req.query.char);
     const requestedJob = decodeURI(req.query.job);
     const currentChars = gameState.galufKrileSwapped ? charactersPostSwap : characters;
