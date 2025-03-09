@@ -8,7 +8,12 @@ const gameState = {
     gateProgress: 1,
     freelancerAllowed: false,
     galufKrileSwapped: false,
-    currentJobs: []
+    currentJobs: [
+        {character: "Bartz", job: "Freelancer"},
+        {character: "Lenna", job: "Freelancer"},
+        {character: "Galuf", job: "Freelancer"},
+        {character: "Faris", job: "Freelancer"},
+    ]
 };
 
 const setCharacterJob = (character, job) => {
