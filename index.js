@@ -74,7 +74,7 @@ const setCharJobExplicit = (req, res, next) => {
     const requestedJob = decodeURI(req.query.job);
     const currentChars = gameState.galufKrileSwapped ? charactersPostSwap : characters;
     const caseCorrectedChar = currentChars.find(character => character.toLowerCase() === requestedChar.toLowerCase());
-    const caseCorrectedJob = getAvailableJobs().find(availableJob => availableJob.toLowerCase() === requestedJob);
+    const caseCorrectedJob = getAvailableJobs().find(availableJob => availableJob.toLowerCase() === requestedJob.toLowerCase());
     if (!caseCorrectedChar) {
         res.send(`Character name is not one of the current four: ${currentChars.join(" ")}`);
         return;
