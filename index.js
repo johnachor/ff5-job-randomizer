@@ -18,7 +18,7 @@ const gameState = {
 
 const setCharacterJob = (character, job) => {
     gameState.currentJobs = gameState.currentJobs
-    .filter((charJob) => charJob.char !== character)
+    .filter((charJob) => charJob.character !== character)
     .concat({character, job});
 };
 
