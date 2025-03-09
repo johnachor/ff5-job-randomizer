@@ -1,6 +1,6 @@
 import express from "express";
 import { characters, charactersPostSwap, jobSets, progressGates } from "./constants.js";
-import { getRandomElementFromArray } from "./utils.js";
+import { getRandomElementFromArray, stringsMatch } from "./utils.js";
 
 const app = express();
 
@@ -50,7 +50,7 @@ const toggleFreelancer = (req, res, next) => {
 
 const randomizeSomeone = (req, res, next) => {
     const chosenCharacter = getRandomElementFromArray(gameState.galufKrileSwapped ? charactersPostSwap : characters);
-    const chosenJob = getRandomElementFromArray(getAvailableJobs().filter(job => job !== gameState.currentJobs.find(charJob => charJob.char === chosenCharacter)?.job));
+    const chosenJob = getRandomElementFromArray(getAvailableJobs().filter(job => !stringsMatch(job, gameState.currentJobs.find(charJob => charJob.character === chosenCharacter)?.job)));
     setCharacterJob(chosenCharacter, chosenJob);
     res.send(`Randomization time! Change ${chosenCharacter} to ${chosenJob}!`);
 };
