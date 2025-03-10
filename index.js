@@ -26,6 +26,7 @@ const setCharacterJob = (character, job) => {
 };
 
 const swapGalufForKrile = (req, res, next) => {
+    gameState.galufKrileSwapped = true;
     const galufJob = findCharJobByChar(GALUF)?.job;
     gameState.currentJobs = gameState.currentJobs
     .filter((charJob) => charJob.character !== GALUF)
